@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Room Hunt - Find rooms, PGs, flats, houses and hotels near you.">
+  <title>Room Hunt — Find your perfect space</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <div id="app" class="app-shell">
+
+    <!-- =======================================================
+         SPLASH SCREEN
+    ======================================================== -->
+    <section id="splashScreen" class="screen splash-screen app-screen">
+      <div class="splash-card">
+        <div class="brand-logo large"><span class="logo-house">⌂</span>
+          <span>Room<span>Hunt</span></span></div>
+        <p>Find your space. Live your way.</p>
+        <div class="loader"><i></i></div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         WELCOME / ONBOARDING
+    ======================================================== -->
+    <section id="onboardingScreen" class="screen app-screen hidden">
+      <div class="onboard-wrap">
+        <div class="onboard-art">
+          <div class="onboarding-image">
+            <img src="images/onboarding-logo.png" alt="onboarding image">
+          </div>
+        </div>
+        <div class="onboard-copy">
+          <span class="eyebrow">WELCOME TO ROOM HUNT</span>
+          <h1>Find Your <span>Perfect Space</span></h1>
+          <p>Search verified rooms, PGs, flats, houses and hotels around the location you need.</p>
+          <div class="onboard-dots"><b></b><b></b><b></b></div>
+          <button class="primary wide" data-action="next-onboarding">Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         FEATURES SCREEN
+    ======================================================== -->
+    <section id="featuresScreen" class="screen app-screen hidden">
+      <div class="center-panel">
+        <span class="eyebrow">WHY ROOM HUNT</span>
+        <h1>Everything in one place</h1>
+        <p>Search nearby, save favourites, contact owners and manage your own listings.</p>
+        <div class="feature-grid">
+          <article><span>📌</span><h3>Nearby Search</h3><p>Search around a location with a practical 5 km radius.</p></article>
+          <article><span>📜</span><h3>Real Listings</h3><p>Room, PG, flat, house and hotel listing structure.</p></article>
+          <article><span>🛡️</span><h3>Owner Verification</h3><p>Owner mobile verification and listing controls.</p></article>
+          <article><span>❤️</span><h3>Save Rooms</h3><p>Keep favourite properties and track availability.</p></article>
+          <article><span>📷</span><h3>Easy Posting</h3><p>Upload photos from camera or gallery with validation.</p></article>
+          <article><span>🔔</span><h3>Smart Alerts</h3><p>Prepare location alerts for future matching listings.</p></article>
+        </div>
+        <button class="primary" data-action="open-role">Get Started</button>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         USER / OWNER ROLE SELECTION
+    ======================================================== -->
+    <section id="roleScreen" class="screen app-screen hidden">
+      <div class="center-panel narrow">
+        <span class="eyebrow">LET'S GET STARTED</span>
+        <h1>How will you use Room Hunt?</h1>
+        <div class="role-grid">
+          <button class="role-card" data-role="user"><span>🔎</span><strong>I'm looking for a property</strong><small>Search, save and contact owners.</small></button>
+          <button class="role-card" data-role="owner"><span>🔑</span><strong>I'm an owner</strong><small>Post and manage your properties.</small></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         LOGIN SCREEN
+    ======================================================== -->
+    <section id="loginScreen" class="screen app-screen hidden">
+      <div class="auth-card">
+        <div class="brand-logo"><span class="logo-house">⌂</span><span>Room<span>Hunt</span></span></div>
+        <h1>Welcome back</h1>
+        <p>Enter your details to continue.</p>
+        <label>Full Name<input id="loginName" type="text" placeholder="e.g.Saroj Naik" autocomplete="name"></label>
+        <label>Mobile Number<div class="phone-input"><span>+91</span><input id="loginPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number"></div></label>
+        <div id="loginError" class="error"></div>
+        <button class="primary wide" data-action="send-otp"> Get OTP</button>
+        <p class="small-note">Your name and mobile number will be used for your Room Hunt profile.</p>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         OTP SCREEN
+    ======================================================== -->
+    <section id="otpScreen" class="screen app-screen hidden">
+      <div class="auth-card">
+        <div class="otp-icon">🔐</div>
+        <h1>Verify your number</h1>
+        <p>Enter the 6-digit OTP generated for this login.</p>
+        <div id="demoOtp" class="demo-otp">Your OTP: ------</div>
+        <div class="otp-boxes" id="otpBoxes">
+          <input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
+        </div>
+        <div id="otpError" class="error"></div>
+        <button class="primary wide" data-action="verify-otp">Verify & Continue</button>
+        <button class="text-btn wide" data-action="resend-otp">Get New OTP</button>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         MAIN APPLICATION
+    ======================================================== -->
+    <section id="mainApp" class="app-screen hidden">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-block">
+          <div class="brand-logo"><span class="house-logo"><img src="images/house-logo.png" alt="RoomHunt Logo"></span><span><span></span></span></div>
+        </div>
+        <nav aria-label="Main navigation">
+          <button class="nav-item active" data-page="home"><span>🏠︎</span>Home</button>
+          <button class="nav-item" data-page="explore"><span>🔍</span>Explore</button>
+          <button class="nav-item" data-filter-type="Room"><span>🛏️</span>Rooms</button>
+          <button class="nav-item" data-filter-type="Flat"><span>🌇</span>Flats</button>
+          <button class="nav-item" data-filter-type="House"><span>🏕️</span>Houses</button>
+          <button class="nav-item" data-filter-type="PG"><span>🎓</span>PG</button>
+          <button class="nav-item" data-filter-type="Hotel"><span>🏦</span>Hotel</button>
+          <button class="nav-item" data-page="favorites"><span>💖</span>Favorites</button>
+          <button class="nav-item" data-page="messages"><span>💬</span>Messages</button>
+          <button class="nav-item" data-page="profile"><span>👨🏻‍💼</span>Profile</button>
+          <button class="nav-item" data-page="settings"><span>⚙</span>Settings</button>
+        </nav>
+        <div class="post-promo">
+          <div class="mini-house"><img src="images/mini-house.png" alt="Mini House"></div>
+          <button class="secondary orange" data-action="open-post">＋ Post a Room</button>
+        </div>
+      </aside>
+
+      <div class="content">
+        <header class="topbar">
+          <button class="mobile-menu" data-action="toggle-sidebar" aria-label="Open menu">☰</button>
+          <div class="mobile-brand" aria-label="Room Hunt">Room<span>Hunt</span></div>
+          <div class="header-text"><span class="header-all-text"></span>⌂<span>Room<span>Hunt</span></span></div>
+          <div class="location-pill"><span>📍</span><strong id="headerLocation">Bhubaneswar, Odisha</strong><button data-action="choose-location">⌄</button></div>
+          <button class="header-fav-link" data-page="favorites" aria-label="Open favourites">⁠❤︎<span id="headerFavoriteCount" aria-label="Favourite room count">0</span></button><button class="primary post-top" data-action="open-post">＋ Post a Room</button>
+          <button class="icon-btn" data-page="notifications" aria-label="Notifications">🔔<em id="notificationCount">0</em></button>
+          <button class="profile-mini" data-page="profile"><span id="headerAvatar" class="avatar-shell"><span class="avatar-fallback">👤</span><img class="avatar-photo hidden" alt="Profile photo"></span><span><small>Hello!</small><strong id="headerName">User</strong></span><b>⌄</b></button>
+        </header>
+
+        <main class="view">
+          <!-- HOME PAGE -->
+          <section id="page-home" class="page-view">
+            <div class="hero">
+              <div class="hero-copy">
+                <span class="eyebrow">ROOM HUNT</span>
+                <h1>Find a Place <br><span> You can call <br><span class="home-text">🏠︎ _𝓱♡𝓶𝓮.</span> </span></h1>
+                <div class="benefits">
+                  <div><i>✓</i> Verified Listings</div>
+                  <div><i>₹</i> Budget Friendly</div>
+                  <div><i>🌱</i> Community Friendly</div>
+                  <div><i>✓</i> Trusted Search</div>
+                </div>
+                <div class="hero-note">A better stay.<br>A brighter tomorrow.</div>
+              </div>
+              <div class="search-panel">
+                <div class="search-brand">
+                  <img src="images/room-hunt-text.png" alt="Room Hunt text">
+                  </div>
+                <div class="search-line">
+                  <span>📌</span>
+                  <input id="homeSearch" type="search" placeholder="Search location (e.g. Koraput, Patia, MVP Colony)">
+                  <button data-action="use-current-location" aria-label="Use current location">⌖</button>
+                </div>
+                <button class="primary" data-action="search-home">🔎︎ Search Rooms</button>
+                <div class="popular"><div class="popular-title">Popular Locations</div><div class="chips">
+                  <button class="chip" data-location="Rayagada">⚲ Rayagada</button>
+                  <button class="chip" data-location="Koraput">⚲ Koraput</button>
+                  <button class="chip" data-location="Jayapur">⚲ Jayapur</button>
+                  <button class="chip" data-location="Bhubaneswar">⚲ Bhubaneswar</button>
+                </div></div>
+              </div>
+            </div>
+
+            <div class="filter-row">
+              <button class="type-chip active" data-home-type="All">All Types</button>
+              <button class="type-chip" data-home-type="Room">Room</button>
+              <button class="type-chip" data-home-type="Flat">Flat</button>
+              <button class="type-chip" data-home-type="House">House</button>
+              <button class="type-chip" data-home-type="PG">PG</button>
+              <button class="type-chip" data-home-type="Hotel">Hotel</button>
+              <button class="secondary-btn sorter" data-action="sort-listings">Sort: Recommended ⌄</button>
+              <button class="secondary-btn" data-action="open-filter">☷ Filters</button>
+            </div>
+
+            <div class="listing-head">
+              <div><h2>Available Rooms &amp; PGs</h2><p id="listingSubtitle">Find properties near your preferred location.</p></div>
+              <button class="link-btn" data-action="see-all">See all →</button>
+            </div>
+            <div id="roomCards" class="cards"><article class="room-card listing-slot" data-slot="0" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="1" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="2" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="3" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="4" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="5" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="6" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="7" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="8" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="9" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="10" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="11" data-list="home" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article></div>
+          </section>
+
+          <!-- EXPLORE PAGE -->
+          <section id="page-explore" class="page-view hidden">
+            <div class="page-title explore-title"><div><span class="eyebrow">DISCOVER</span><h1>Explore Properties</h1><p>Search and filter all available listings.</p></div><form id="exploreSearchForm" class="explore-search" role="search"><input id="exploreSearch" type="search" placeholder="Search rooms or location…" aria-label="Search rooms or location"><button type="submit" aria-label="Search">⌕</button></form></div>
+            <div id="exploreCards" class="cards"><article class="room-card listing-slot" data-slot="0" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="1" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="2" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="3" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="4" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="5" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="6" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="7" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="8" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="9" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="10" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="11" data-list="explore" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article></div>
+          </section>
+
+          <!-- FAVORITES PAGE -->
+          <section id="page-favorites" class="page-view hidden">
+            <div class="page-title"><span class="eyebrow">SAVED</span><h1>Favourite Rooms</h1><p>Your saved properties stay here even when one becomes unavailable.</p></div>
+            <div id="favoriteCards" class="cards"><article class="room-card listing-slot" data-slot="0" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="1" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="2" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="3" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="4" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="5" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="6" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="7" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="8" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="9" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="10" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article><article class="room-card listing-slot" data-slot="11" data-list="favorite" hidden>
+      <div class="room-img"><img data-ref="image" alt="Property photo"><button class="fav-btn" data-card-action="favorite" aria-label="Favourite">♡</button><span class="room-media-badge" data-ref="status">Available</span></div>
+      <div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><h3 data-ref="title">Property</h3><div class="location"><b>📍</b> <span data-ref="location">Location</span></div><div class="room-distance" data-ref="distance"></div><div class="tags" data-ref="tags"><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span><span class="tag" hidden></span></div><div class="room-card-actions"><button data-card-action="details">View Details</button><button class="share-action" data-card-action="share">Share</button></div><div class="unavailable-message" data-ref="unavailable"></div></div>
+    </article></div>
+          </section>
+
+          <!-- NOTIFICATIONS PAGE -->
+          <section id="page-notifications" class="page-view hidden">
+            <div class="page-title notification-title"><div><span class="eyebrow">UPDATES</span><h1>Notifications</h1><p>Property, favourite, visit and subscription updates.</p></div><button class="all-clear-link" data-action="clear-notifications">All clear</button></div>
+            <div id="notificationsList" class="settings-card"><div class="notification-item notification-slot" data-slot="0" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="1" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="2" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="3" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="4" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="5" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="6" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="7" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="8" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="9" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="10" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div class="notification-item notification-slot" data-slot="11" hidden><strong data-ref="text"></strong><small data-ref="time"></small><button class="notification-remove" data-action="remove-notification" aria-label="Remove notification">Remove</button></div><div id="notificationsEmpty" class="empty">No notifications yet.</div></div>
+          </section>
+ <!-- =========================================================
+     MESSAGES PAGE
+   ========================================================= -->
+
+<section id="page-messages" class="page-view hidden">
+
+  <!-- =========================
+       MESSAGES HOME
+  ========================== -->
+  <div id="messagesHome">
+
+    <div class="page-title messages-page-title">
+      <span class="eyebrow">COMMUNICATION</span>
+      <h1>Messages</h1>
+      <p>Your room conversations and visit requests.</p>
+    </div>
+
+    <div id="conversationList" class="conversation-list">
+
+      <!-- ROOM CONVERSATION 1 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message">
+                No messages yet.
+              </span>
+
+              <em data-ref="unread-count" hidden></em>
+            </div>
+
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 2 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 3 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 4 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 5 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 6 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 7 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 8 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 9 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+
+      <!-- ROOM CONVERSATION 10 -->
+      <article class="conversation-card" data-message-room-card hidden>
+        <button type="button"
+                class="conversation-main"
+                data-message-room-open>
+
+          <div class="conversation-room-photo">
+            <img data-ref="room-photo" alt="Room photo">
+            <span data-ref="room-photo-fallback">🏠</span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="conversation-top">
+              <strong data-ref="owner-name">Owner</strong>
+              <time data-ref="time"></time>
+            </div>
+
+            <div class="conversation-room-name"
+                 data-ref="room-title">
+              Room
+            </div>
+
+            <div class="conversation-last-row">
+              <span data-ref="last-message"></span>
+              <em data-ref="unread-count" hidden></em>
+            </div>
+          </div>
+
+        </button>
+
+        <button type="button"
+                class="conversation-remove"
+                data-message-room-remove
+                aria-label="Remove conversation">
+          ×
+        </button>
+      </article>
+
+    </div>
+
+    <div id="messagesEmpty" class="empty">
+      No conversations yet.
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       ROOM CHAT PAGE
+  ========================== -->
+  <div id="roomChatPage" class="room-chat-page hidden">
+
+    <header class="room-chat-header">
+
+      <button type="button"
+              class="chat-back-btn"
+              data-action="close-room-chat"
+              aria-label="Back">
+        ←
+      </button>
+
+      <div class="chat-owner-avatar">
+        <img id="chatOwnerAvatar"
+             alt="Owner profile">
+        <span id="chatOwnerAvatarFallback">👤</span>
+      </div>
+
+      <div class="chat-header-info">
+        <strong id="chatOwnerName">Owner</strong>
+        <small id="chatContactSubtitle" class="chat-contact-subtitle" hidden></small>
+        <small id="chatRoomName">Room</small>
+      </div>
+
+    </header>
+
+
+    <!-- CHAT MESSAGES -->
+    <div id="roomChatMessages"
+         class="room-chat-messages">
+
+      <!-- CHAT SLOT -->
+      <article class="chat-message-slot" data-chat-slot="0" hidden>
+
+        <div class="chat-bubble"
+             data-ref="chat-bubble">
+
+          <img data-ref="chat-photo"
+               class="chat-message-photo hidden"
+               alt="Shared photo">
+
+          <p data-ref="chat-text"></p>
+
+          <div class="chat-message-meta">
+            <time data-ref="chat-time"></time>
+            <span data-ref="chat-status"></span>
+          </div>
+
+        </div>
+
+
+        <div class="visit-request-card"
+             data-ref="visit-card"
+             hidden>
+
+          <div class="visit-request-title">
+            🏠 Room Visit Request
+          </div>
+
+          <div class="visit-request-info"
+               data-ref="visit-detail">
+          </div>
+
+          <div class="visit-request-status"
+               data-ref="visit-status">
+          </div>
+
+          <div class="visit-request-reason"
+               data-ref="visit-reason">
+          </div>
+
+          <div class="visit-request-actions">
+
+            <button type="button"
+                    data-message-action="accept"
+                    hidden>
+              Accept
+            </button>
+
+            <button type="button"
+                    data-message-action="reject"
+                    hidden>
+              Reject
+            </button>
+
+            <button type="button"
+                    data-message-action="resend"
+                    hidden>
+              Request Again
+            </button>
+
+            <button type="button"
+                    data-message-action="contact"
+                    hidden>
+              Contact Owner
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- COPY SAME STATIC SLOT 19 MORE TIMES -->
+      <article class="chat-message-slot" data-chat-slot="1" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="2" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="3" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="4" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="5" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="6" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="7" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="8" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="9" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="10" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="11" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="12" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="13" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="14" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="15" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="16" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="17" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="18" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="19" hidden></article>
+      <article class="chat-message-slot" data-chat-slot="20" hidden></article>
+
+    </div>
+
+
+    <!-- LONG PRESS MENU -->
+    <div id="messageContextMenu"
+         class="message-context-menu"
+         hidden>
+
+      <button type="button"
+              data-message-action="edit">
+        Edit
+      </button>
+
+      <button type="button"
+              data-message-action="remove">
+        Delete
+      </button>
+
+    </div>
+
+
+    <!-- CHAT COMPOSER -->
+    <div id="messageComposer"
+         class="chat-composer">
+
+      <button type="button"
+              class="chat-tool-btn"
+              data-chat-action="photo"
+              aria-label="Send photo">
+        📎
+      </button>
+
+      <button type="button"
+              class="chat-tool-btn"
+              data-chat-action="location"
+              aria-label="Share location">
+        📍
+      </button>
+
+      <input id="messagePhotoInput"
+             class="hidden"
+             type="file"
+             accept="image/*">
+
+      <input id="messageInput"
+             type="text"
+             placeholder="Write a message..."
+             autocomplete="off">
+
+      <button type="button"
+              class="chat-send-btn"
+              data-action="send-message"
+              aria-label="Send">
+        ➤
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+          <!-- PROFILE PAGE -->
+          <section id="page-profile" class="page-view hidden">
+            <div class="page-title"><span class="eyebrow">ACCOUNT</span><h1>Profile</h1></div>
+            <div class="profile-page">
+              <div class="profile-banner">
+                <div class="avatar-big avatar-shell" id="profileAvatar"><span class="avatar-fallback">👤</span><img class="avatar-photo hidden" alt="Profile photo"></div>
+                <div><h2 id="profileName">User</h2><p id="profileRole">User</p><p id="profilePhone">+91</p></div>
+                <div class="stats"><div class="stat"><strong id="statFav">0</strong><span>Saved</span></div><div class="stat"><strong id="statListings">0</strong><span>Listings</span></div></div>
+                <button class="profile-notification-dot" data-page="notifications" aria-label="Open notifications" title="Notifications">🔔<em id="profileNotificationCount">0</em></button><button class="secondary-btn" data-action="edit-profile">✏ Edit Profile</button>
+              </div>
+              <div id="ownerListings" class="settings-card hidden"><h3>My Listings</h3><div id="ownerListingCards" class="cards"><article class="room-card owner-listing-slot" data-slot="0" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="1" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="2" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="3" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="4" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="5" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="6" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="7" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="8" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="9" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="10" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article><article class="room-card owner-listing-slot" data-slot="11" hidden><div class="room-img"><img data-ref="image" alt="Property photo"><span class="room-media-badge" data-ref="status">Available</span></div><div class="room-body"><div class="listing-status available" data-ref="availability">● Available</div><h3 data-ref="title">Property</h3><div class="location">📍 <span data-ref="location">Location</span></div><div class="price">₹<span data-ref="price">0</span> <small data-ref="suffix">/ month</small></div><div class="owner-controls"><button class="owner-edit" data-card-action="edit">✏ Edit</button><button class="owner-delete" data-card-action="delete">🗑 Delete</button></div></div></article></div><div id="ownerListingsEmpty" class="empty">You have not posted a property yet.</div></div>
+            </div>
+          </section>
+
+          <!-- SETTINGS PAGE -->
+          <section id="page-settings" class="page-view hidden">
+            <div class="page-title"><span class="eyebrow">PREFERENCES</span><h1>Settings</h1><p>Manage your Room Hunt experience.</p></div>
+            <div class="settings-page">
+              <div class="settings-card">
+                <div class="setting-row"><div><strong>Dark mode</strong><small>Switch between light and dark themes.</small></div><button id="themeToggle" class="toggle" data-action="toggle-theme"><i></i></button></div>
+                <div class="setting-row"><div><strong>Notifications</strong><small>Receive matching-property and account updates.</small></div><button id="notifyToggle" class="toggle on" data-action="toggle-notifications"><i></i></button></div>
+                <div class="setting-row"><div><strong>Subscription</strong><small id="subscriptionStatus">No active subscription</small></div><button class="secondary-btn" data-action="open-subscription">View Plans</button></div>
+                <div class="setting-row"><div><strong>About Room Hunt</strong><small>How the platform works.</small></div><button class="secondary-btn" data-action="open-about">About</button></div>
+                <div class="setting-row"><div><strong>Security &amp; Privacy</strong><small>Contact details stay locked until access is granted.</small></div><button class="secondary-btn" data-action="open-security">View</button></div>
+                <div class="setting-row"><div><strong>Help &amp; Feedback</strong><small>Contact Room Hunt or send your feedback.</small></div><button class="secondary-btn" data-action="open-help">Open</button></div>
+                <div class="setting-row"><div><strong>Logout</strong><small>Return to the splash screen.</small></div><button class="secondary-btn danger" data-action="logout">Logout</button></div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       Mode
+  ========================================================== -->
+
+  <!-- Filter modal -->
+  <div id="filterModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="eyebrow">FILTER</span><h2>Find the right property</h2></div><button class="close" data-action="close-modal">×</button></div>
+      <div class="form-grid">
+        <label>Property Type<select id="filterType"><option value="All">All Types</option><option>Room</option><option>PG</option><option>Flat</option><option>House</option><option>Hotel</option></select></label>
+        <label>Location<input id="filterLocation" placeholder="Bhubaneswar"></label>
+        <label>Min Price<input id="filterMin" type="number" min="0" placeholder="0"></label>
+        <label>Max Price<input id="filterMax" type="number" min="0" placeholder="50000"></label>
+        <label>Distance<select id="filterDistance"><option value="5">Within 5 km</option><option value="10">Within 10 km</option><option value="25">Within 25 km</option><option value="50">Within 50 km</option></select></label>
+        <label>Availability<select id="filterAvailability"><option value="available">Available only</option><option value="all">All saved status</option></select></label>
+        <div class="full"><strong>Facilities</strong><div id="filterFacilities" class="facility-grid"><label class="facility-item"><input type="checkbox" value="Wi-Fi" data-facility-group="filter"><span><b class="facility-icon">📶</b>Wi-Fi</span></label><label class="facility-item"><input type="checkbox" value="Attached Bathroom" data-facility-group="filter"><span><b class="facility-icon">🚿</b>Attached Bathroom</span></label><label class="facility-item"><input type="checkbox" value="Bed" data-facility-group="filter"><span><b class="facility-icon">🛏</b>Bed</span></label><label class="facility-item"><input type="checkbox" value="Electricity" data-facility-group="filter"><span><b class="facility-icon">⚡</b>Electricity</span></label><label class="facility-item"><input type="checkbox" value="Parking" data-facility-group="filter"><span><b class="facility-icon">🚗</b>Parking</span></label><label class="facility-item"><input type="checkbox" value="Lift" data-facility-group="filter"><span><b class="facility-icon">🛗</b>Lift</span></label><label class="facility-item"><input type="checkbox" value="AC" data-facility-group="filter"><span><b class="facility-icon">❄</b>AC</span></label><label class="facility-item"><input type="checkbox" value="Kitchen" data-facility-group="filter"><span><b class="facility-icon">🍳</b>Kitchen</span></label><label class="facility-item"><input type="checkbox" value="Tap Water" data-facility-group="filter"><span><b class="facility-icon">🚰</b>Tap Water</span></label><label class="facility-item"><input type="checkbox" value="Fan" data-facility-group="filter"><span><b class="facility-icon">🌀</b>Fan</span></label><label class="facility-item"><input type="checkbox" value="Furniture" data-facility-group="filter"><span><b class="facility-icon">🪑</b>Furniture</span></label><label class="facility-item"><input type="checkbox" value="Terrace" data-facility-group="filter"><span><b class="facility-icon">🌇</b>Terrace</span></label><label class="facility-item"><input type="checkbox" value="Swimming Pool" data-facility-group="filter"><span><b class="facility-icon">🏊</b>Swimming Pool</span></label><label class="facility-item"><input type="checkbox" value="Garden" data-facility-group="filter"><span><b class="facility-icon">🌳</b>Garden</span></label><label class="facility-item"><input type="checkbox" value="Prayer room" data-facility-group="filter"><span><b class="facility-icon">⾕</b>Prayer room </span></label><label class="facility-item"><input type="checkbox" value="Food / Meals" data-facility-group="filter"><span><b class="facility-icon">🍽</b>Food / Meals</span></label></div></div>
+      </div>
+      <div class="action-row"><button class="secondary-btn" data-action="reset-filter">Reset</button><button class="primary" data-action="apply-filter">Apply Filters</button></div>
+    </div>
+  </div>
+
+  <!-- Post property modal -->
+  <div id="postModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="eyebrow">OWNER</span><h2>𓇬Post a Room</h2></div><button class="close" data-action="close-modal">×</button></div>
+      <form id="propertyForm" novalidate>
+        <div class="form-grid">
+          <label>Property Type<select id="propertyType" required><option value="">What do you want to post</option><option>Room</option><option>PG</option><option>Flat</option><option>House</option><option>Hotel</option></select></label>
+          <label>Property Title<input id="propertyTitle" required placeholder="e.g. Furnished single room near KIIT"></label>
+          <label>Price<div class="price-input"><span>₹</span><input id="propertyPrice" type="number" min="1" required placeholder="5000"><b id="priceSuffix">/ month</b></div></label>
+          <label>Post Date<input id="postDate" type="date" required></label>
+          <label class="full">Location<div class="location-input"><input id="propertyLocation" required placeholder="Enter property location"><button type="button" class="secondary-btn" data-action="property-live-location">📍 Live</button></div></label>
+          <label>Owner Name<input id="ownerName" required placeholder="Owner name"></label>
+          <label>Phone Number<input id="ownerPhone" type="tel" inputmode="numeric" maxlength="10" required placeholder="10 digit mobile number"></label>
+          <label>WhatsApp Number<input id="ownerWhatsapp" type="tel" inputmode="numeric" maxlength="10" required placeholder="10 digit WhatsApp number"></label>
+          <label class="full">Description<textarea id="propertyDescription" rows="4" required placeholder="Describe the property, rules, nearby places and important details."></textarea></label>
+          <div class="full">
+            <strong>Facilities</strong>
+            <div id="propertyFacilities" class="facility-grid"><label class="facility-item"><input type="checkbox" value="Wi-Fi" data-facility-group="property"><span><b class="facility-icon">📶</b>Wi-Fi</span></label><label class="facility-item"><input type="checkbox" value="Attached Bathroom" data-facility-group="property"><span><b class="facility-icon">🚿</b>Attached Bathroom</span></label><label class="facility-item"><input type="checkbox" value="Bed" data-facility-group="property"><span><b class="facility-icon">🛏</b>Bed</span></label><label class="facility-item"><input type="checkbox" value="Electricity" data-facility-group="property"><span><b class="facility-icon">⚡</b>Electricity</span></label><label class="facility-item"><input type="checkbox" value="Parking" data-facility-group="property"><span><b class="facility-icon">🚗</b>Parking</span></label><label class="facility-item"><input type="checkbox" value="Lift" data-facility-group="property"><span><b class="facility-icon">🛗</b>Lift</span></label><label class="facility-item"><input type="checkbox" value="AC" data-facility-group="property"><span><b class="facility-icon">❄</b>AC</span></label><label class="facility-item"><input type="checkbox" value="Kitchen" data-facility-group="property"><span><b class="facility-icon">🍳</b>Kitchen</span></label><label class="facility-item"><input type="checkbox" value="Tap Water" data-facility-group="property"><span><b class="facility-icon">🚰</b>Tap Water</span></label><label class="facility-item"><input type="checkbox" value="Fan" data-facility-group="property"><span><b class="facility-icon">🌀</b>Fan</span></label><label class="facility-item"><input type="checkbox" value="Furniture" data-facility-group="property"><span><b class="facility-icon">🪑</b>Furniture</span></label><label class="facility-item"><input type="checkbox" value="Terrace" data-facility-group="property"><span><b class="facility-icon">🌇</b>Terrace</span></label><label class="facility-item"><input type="checkbox" value="Swimming Pool" data-facility-group="property"><span><b class="facility-icon">🏊</b>Swimming Pool</span></label><label class="facility-item"><input type="checkbox" value="Garden" data-facility-group="property"><span><b class="facility-icon">🌳</b>Garden</span></label><label class="facility-item"><input type="checkbox" value="Prayer room" data-facility-group="property"><span><b class="facility-icon">⾕</b>Prayer room</span></label><label class="facility-item"><input type="checkbox" value="Food / Meals" data-facility-group="property"><span><b class="facility-icon">🍽</b>Food / Meals</span></label></div>
+          </div>
+          <div class="full upload-box">
+            <strong>Property Photos <small>(minimum 3, maximum 10)</small></strong>
+            <div class="upload-actions">
+              <button type="button" class="secondary-btn" data-action="open-camera">📷 Camera</button>
+              <button type="button" class="secondary-btn" data-action="open-photo-file">🌆 Gallery / File</button>
+              <input id="photoFileInput" class="hidden" type="file" accept="image/*" multiple>
+              <input id="cameraInput" class="hidden" type="file" accept="image/*" capture="environment" multiple>
+            </div>
+            <div id="photoPreview" class="upload-preview"><div class="preview-item" hidden><img alt="Property photo 0"><button type="button" class="preview-delete" data-photo-index="0">×</button></div><div class="preview-item" hidden><img alt="Property photo 1"><button type="button" class="preview-delete" data-photo-index="1">×</button></div><div class="preview-item" hidden><img alt="Property photo 2"><button type="button" class="preview-delete" data-photo-index="2">×</button></div><div class="preview-item" hidden><img alt="Property photo 3"><button type="button" class="preview-delete" data-photo-index="3">×</button></div><div class="preview-item" hidden><img alt="Property photo 4"><button type="button" class="preview-delete" data-photo-index="4">×</button></div><div class="preview-item" hidden><img alt="Property photo 5"><button type="button" class="preview-delete" data-photo-index="5">×</button></div><div class="preview-item" hidden><img alt="Property photo 6"><button type="button" class="preview-delete" data-photo-index="6">×</button></div><div class="preview-item" hidden><img alt="Property photo 7"><button type="button" class="preview-delete" data-photo-index="7">×</button></div><div class="preview-item" hidden><img alt="Property photo 8"><button type="button" class="preview-delete" data-photo-index="8">×</button></div><div class="preview-item" hidden><img alt="Property photo 9"><button type="button" class="preview-delete" data-photo-index="9">×</button></div></div>
+          </div>
+          <div class="full upload-box">
+            <strong>Property Video <small>(optional, maximum 1 video)</small></strong>
+            <div class="upload-actions"><button type="button" class="secondary-btn" data-action="open-video-file">🎬 Upload Video</button><input id="videoFileInput" class="hidden" type="file" accept="video/*"></div>
+            <div id="videoPreview" class="video-preview"><div class="video-card" hidden><div class="video-loader" role="status" aria-live="polite"><div class="video-spinner" aria-hidden="true"></div><div class="video-upload-copy"><strong id="videoUploadLabel">Uploading video to Room Hunt…</strong><span id="videoUploadPercent">Preparing upload</span></div><div class="video-upload-track"><span id="videoUploadBar"></span></div></div><video controls hidden></video><button type="button" class="video-delete" data-video-delete hidden aria-label="Remove selected video">×</button></div></div>
+          </div>
+          <div class="full availability-panel">
+            <label class="availability-toggle"><input id="propertyAvailable" type="checkbox" checked><span>Property is available</span></label>
+            <div id="availabilityOptions" class="availability-options"><select id="availabilityWindow"><option value="1 week">Available after 1 week</option><option value="2 weeks">Available after 2 weeks</option><option value="1 month">Available after 1 month</option><option value="select date">Select a date</option></select><input id="availabilityDate" type="date" class="hidden"></div>
+          </div>
+        </div>
+        <div id="propertyFormError" class="error"></div>
+        <p class="publish-note">Your listing will appear on Room Hunt after the property is saved successfully.</p>
+        <button class="primary wide publish-submit" type="submit">Publish Property</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success modal -->
+  <div id="successModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card small"><div class="success-wrap"><div class="success-circle">✓</div><h2>Your property has been successfully uploaded on <strong>Room Hunt</strong>.</h2><p>Thank you for posting your property.</p><button class="primary wide" data-action="finish-publish">DONE</button></div></div>
+  </div>
+
+  <!-- Delete modal -->
+  <div id="deleteModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card small danger-modal"><div class="modal-head"><h2>Remove Property</h2><button class="close" data-action="close-modal">×</button></div><p>Are you sure you want to remove this property?</p><div class="action-row"><button class="secondary-btn" data-action="close-modal">Cancel</button><button class="secondary-btn danger" data-action="confirm-delete">Delete</button></div></div>
+  </div>
+
+  <!-- Contact unlock / subscription modal -->
+  <div id="paymentModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card small"><div class="modal-head"><div><span class="eyebrow">CONTACT ACCESS</span><h2 id="paymentTitle">Unlock contact details</h2></div><button class="close" data-action="close-modal">×</button></div><p id="paymentDescription">Choose a plan or unlock this property's contact details.</p><div id="subscriptionPlans" class="plan-grid"><article class="plan-card subscription-slot" data-slot="0"><strong>₹79</strong><small>1 month — Contact access</small><button type="button" data-plan-months="1">Choose Plan</button></article><article class="plan-card subscription-slot" data-slot="1"><strong>₹150</strong><small>2 months — Contact access</small><button type="button" data-plan-months="2">Choose Plan</button></article><article class="plan-card subscription-slot" data-slot="2"><strong>₹200</strong><small>3 months — Contact + Maps</small><button type="button" data-plan-months="3">Choose Plan</button></article><article class="plan-card subscription-slot" data-slot="3"><strong>₹300</strong><small>5 months — Contact + Maps</small><button type="button" data-plan-months="5">Choose Plan</button></article></div><div id="qrArea" class="qr-area hidden"><div class="qr-placeholder">QR<br><small>Payment</small></div><strong id="paymentAmount">₹2</strong><p>Demo payment panel. Real payments require a secure payment gateway and backend verification.</p><button class="primary wide" data-action="demo-payment-success">Simulate Verified Payment</button></div></div>
+  </div>
+
+  <!-- Room details modal/page -->
+  <div id="detailsModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card"><div class="modal-head"><div><span class="eyebrow">PROPERTY DETAILS</span><h2 id="detailTitle">Room</h2></div><button class="close" data-action="close-modal">×</button></div><div id="detailContent" class="detail-grid"><div class="detail-main"><div class="detail-gallery"><img id="detailImage1" alt="Property image">
+      <div id="detailVideoStage" class="detail-video-stage hidden" hidden>
+        <video id="detailVideo" controls playsinline preload="metadata" class="detail-video" aria-label="Room property video"></video>
+        <div class="detail-video-menu-wrap">
+          <div id="detailVideoMenu" class="detail-video-menu hidden" hidden role="menu" aria-label="Video options">
+            <a id="detailVideoDownload" href="#" download role="menuitem">⬇ Download video</a>
+            <label class="detail-video-speed-row" for="detailVideoSpeed">Playback speed
+              <select id="detailVideoSpeed" aria-label="Playback speed">
+                <option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1× Normal</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option>
+              </select>
+            </label>
+            <button type="button" data-video-action="pip" role="menuitem">▣ Picture-in-Picture</button>
+            <button type="button" data-video-action="fullscreen" role="menuitem">⛶ Fullscreen</button>
+          </div>
+        </div>
+      </div>
+      <div class="detail-thumbs">
+  <img id="detailImage2" alt="Property image">
+  <img id="detailImage3" alt="Property image">
+  <img id="detailImage4" alt="Property image">
+  <img id="detailImage5" alt="Property image">
+  <img id="detailImage6" alt="Property image">
+  <img id="detailImage7" alt="Property image">
+  <img id="detailImage8" alt="Property image">
+  <img id="detailImage9" alt="Property image">
+  <img id="detailImage10" alt="Property image">
+  <button id="detailVideoThumb" class="detail-video-thumb" type="button" hidden aria-label="Show room video in main gallery">
+    <span class="detail-video-thumb-play" aria-hidden="true">▶</span><span>video</span>
+  </button>
+</div></div></div><div class="detail-side"><div id="detailAvailability" class="listing-status available">● Available</div><h1 id="detailPropertyTitle">Room</h1><div class="big-price">₹<span id="detailPrice">0</span> <small id="detailSuffix">/ month</small></div><p class="location">📍 <span id="detailLocation">Location</span> · <span id="detailDistance">0 km</span></p><button type="button" class="view-more-details" data-action="toggle-detail-more" aria-expanded="false">View more…</button><div id="detailMoreContent" class="detail-more-content hidden"><p id="detailDescription"></p><div id="detailFacilities" class="detail-facilities"><span hidden>Wi-Fi</span><span hidden>Attached Bathroom</span><span hidden>Bed</span><span hidden>Electricity</span><span hidden>Parking</span><span hidden>Lift</span><span hidden>AC</span><span hidden>Kitchen</span><span hidden>Tap Water</span><span hidden>Fan</span><span hidden>Furniture</span><span hidden>Terrace</span><span hidden>Swimming Pool</span><span hidden>Garden</span><span hidden>Prayer room</span><span hidden>Food / Meals</span></div></div><div class="owner-box owner-mini-card"><div class="owner-mini-avatar">👤</div><div><strong id="detailOwnerName">Verified Owner</strong><small id="detailOwnerStatus" class="location">✓ Mobile verified</small></div></div><div id="detailContactLock" class="contact-lock">🔒 Owner phone and chat are hidden. Use a subscription or unlock this property's contact access.</div><div class="action-row"><button class="primary" data-detail-action="call">📞 Call</button><button class="secondary-btn" data-detail-action="message">🗪 Message</button><button class="secondary-btn" data-detail-action="whatsapp">✆ WhatsApp</button></div><div class="action-row" style="margin-top:10px"><button class="secondary-btn" data-detail-action="favorite">𓆩♡𓆪 Favourite</button><button class="secondary-btn" data-detail-action="share">Share➤</button><button class="secondary-btn" data-detail-action="visit">Request Visit🏃🏻‍♂️</button><button class="secondary-btn" data-detail-action="direction">🖈Get Directions</button></div></div></div></div>
+  </div>
+
+  <!-- About modal -->
+  <div id="aboutModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card"><div class="modal-head"><div><span class="eyebrow">ABOUT</span><h2>How Room Hunt Works</h2></div><button class="close" data-action="close-modal">×</button></div><div class="about-copy"><p>Room Hunt is designed to connect people searching for accommodation with owners who want to publish property details in one place.</p><h3>For users</h3><p>Search a location, browse properties within the selected radius, use filters, save favourites, request visits and unlock contact access according to the available plan.</p><h3>For owners</h3><p>Create an owner profile, verify a mobile number, upload property photos, optionally add a video, choose facilities, set availability and manage listings.</p><h3>Safety and privacy</h3><p>Owner contact details are hidden by default. Production deployments should use server-side authentication, database rules, secure file storage, payment verification and abuse reporting.</p></div></div>
+  </div>
+
+  <!-- Security modal -->
+  <div id="securityModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-backdrop" data-action="close-modal"></div><div class="modal-card small"><div class="modal-head"><h2>Security &amp; Privacy</h2><button class="close" data-action="close-modal">×</button></div><ul class="security-list"><li>Owner phone numbers remain hidden until access is granted.</li><li>Client-side validation prevents incomplete listings in this demo.</li><li>Production authentication, payment verification and storage must be server-side.</li><li>Browser permissions are controlled by your browser or device; these preferences are Room Hunt settings only.</li></ul><h3 class="permissions-heading">App permissions</h3><p class="modal-hint">Choose your preference for this website. A selection here does not override browser/device permissions.</p><div id="permissionSettings" class="permission-settings"><label>📌Location<select data-permission="location"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>📷Camera<select data-permission="camera"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>📂File<select data-permission="files"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>💬SMS<select data-permission="sms"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>📱Phone<select data-permission="phone"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>👤Contacts<select data-permission="contacts"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>🎤︎︎Microphone<select data-permission="microphone"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>🕭Notifications<select data-permission="notifications"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label><label>💻Nearby devices<select data-permission="nearby"><option>Allowed</option><option>Ask every time</option><option>Not allowed</option></select></label></div><button class="primary wide" data-action="save-permissions">Save preferences</button></div></div>
+
+  <!-- Profile edit modal -->
+  <div id="profileModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-backdrop" data-action="close-modal"></div><div class="modal-card small"><div class="modal-head"><h2>Edit Profile</h2><button class="close" data-action="close-modal">×</button></div><label>Your Name<input id="editName"></label><div class="profile-photo-label"><strong>Profile Photo</strong><input id="profilePhotoInput" type="file" accept="image/*"><button type="button" class="secondary-btn" data-action="choose-profile-photo">Choose photo</button><small>Choose a photo from your device. The file path will not be displayed.</small></div><div class="profile-photo-actions"><button type="button" class="secondary-btn" data-action="remove-profile-photo">Remove photo</button><button class="primary" data-action="save-profile">Save Profile</button></div></div></div>
+  <div id="visitModal" class="modal hidden" role="dialog" aria-modal="true"><div class="modal-backdrop" data-action="close-modal"></div><div class="modal-card small"><div class="modal-head"><div><span class="eyebrow">VISIT REQUEST</span><h2>Request a room visit</h2></div><button class="close" data-action="close-modal" aria-label="Close">×</button></div><p class="modal-hint">Your request is available in this demo on this browser. Real delivery to the owner requires a connected backend.</p><form id="visitForm"><label>Your name<input id="visitName" required maxlength="70" placeholder="Enter your name"></label><label>Phone number<input id="visitPhone" required inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"></label><label>Preferred date<input id="visitDate" required type="date"></label><label>Preferred time<input id="visitTime" required type="time"></label><label>Message to owner<textarea id="visitMessage" rows="3" maxlength="500" placeholder="Write a short message (optional)"></textarea></label><p id="visitFormError" class="form-error" role="status"></p><button type="submit" class="primary wide">Send visit request</button></form></div></div>
+
+  <!-- Help & Feedback modal -->
+  <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card help-modal-card">
+      <div class="modal-head">
+        <div><span class="eyebrow">SUPPORT</span><h2 id="helpTitle">Help &amp; Feedback</h2></div>
+        <button class="close" data-action="close-modal" aria-label="Close">×</button>
+      </div>
+      <p class="modal-hint">Need help with a room, account, message or listing? Contact Room Hunt directly.</p>
+      <div class="help-contact-grid">
+        <a class="help-contact-card" href="tel:+916371103928"><span>📞</span><div><strong>Call</strong><small>6371103928</small></div></a>
+        <a class="help-contact-card" href="https://wa.me/916371103928" target="_blank" rel="noopener"><span>💬</span><div><strong>WhatsApp</strong><small>6371103928</small></div></a>
+        <a class="help-contact-card" href="mailto:sarojnaik931@gmail.com"><span>✉️</span><div><strong>Email</strong><small>sarojnaik931@gmail.com</small></div></a>
+        <a class="help-contact-card" href="https://instagram.com/roomhunt_9f" target="_blank" rel="noopener"><span>📷</span><div><strong>Instagram</strong><small>@roomhunt_9f</small></div></a>
+      </div>
+      <form id="feedbackForm" class="feedback-form">
+        <div class="feedback-title"><strong>Send Feedback</strong><small>Your feedback helps improve Room Hunt.</small></div>
+        <label>Your name<input id="feedbackName" maxlength="70" placeholder="Your name"></label>
+        <label>Your feedback<textarea id="feedbackText" rows="5" maxlength="1500" required placeholder="Write your comment, problem or suggestion..."></textarea></label>
+        <p id="feedbackFormError" class="form-error" role="status"></p>
+        <button type="submit" class="primary wide">Send Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- Separate JavaScript file: no inline script is used. -->
+   <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js" defer></script>
+   <script type="module" src="supabase.js"></script>
+  <script src="script.js" defer></script>
+  <div id="ownerSwitchModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-card small"><div class="modal-head"><h2>Owner ID required</h2>
+      <button class="close" data-action="close-modal" aria-label="Close">×</button>
+</div><p>Only an owner account can publish a room. To continue, you will be signed out of this user account and taken to Owner login.</p>
+    <p><strong>Do you want to log in with an Owner ID?</strong></p><div class="action-row">
+    <button class="secondary-btn" data-action="cancel-owner-switch">Cancel</button>
+    <button class="primary" data-action="continue-owner-switch">Continue</button></div></div></div>
+  <div id="logoutModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-action="close-modal"></div><div class="modal-card small">
+      <div class="modal-head"><h2>Log out?</h2>
+        <button class="close" data-action="close-modal" aria-label="Close">×</button>
+      </div><p>Are you sure you want to log out of Room Hunt?</p>
+      <div class="action-row"><button class="secondary-btn" data-action="cancel-logout">Cancel</button>
+      <button class="primary" data-action="confirm-logout">Log out</button></div></div></div>
+</body>
+</html>
